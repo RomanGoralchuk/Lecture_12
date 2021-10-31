@@ -1,10 +1,7 @@
 package by.itacademy.javaenterprise.goralchuk.DAO;
 
 import by.itacademy.javaenterprise.goralchuk.service.Patients;
-import by.itacademy.javaenterprise.goralchuk.utils.ConnectionPool;
-import by.itacademy.javaenterprise.goralchuk.utils.ConnectionToDataBase;
-import by.itacademy.javaenterprise.goralchuk.utils.DHCPApacheCommons;
-import by.itacademy.javaenterprise.goralchuk.utils.ImplConnectionPool;
+import by.itacademy.javaenterprise.goralchuk.utils.DHCPApacheCommonsPoolConnections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +28,8 @@ public class PatientsImplementsDAO implements PatientsDAO {
             "";
     public static final String SELECT_ALL_PATIENTS = "SELECT * FROM patients";
 
+
+
     private static final Logger logger = LoggerFactory.getLogger(PatientsImplementsDAO.class);
 
 
@@ -41,7 +40,13 @@ public class PatientsImplementsDAO implements PatientsDAO {
 
     @Override
     public Patients create(Patients patients) {
-        Connection connection = ConnectionToDataBase.getNewConnectionViaFile();
+        Connection connection = null;
+        try {
+            connection = DHCPApacheCommonsPoolConnections.getPoolConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         PreparedStatement statement = null;
 
         if (patients != null) {
@@ -100,7 +105,12 @@ public class PatientsImplementsDAO implements PatientsDAO {
     @Override
     public List<Patients> getLimit(String sql) {
         List<Patients> patients = new ArrayList<>();
-        Connection connection = ConnectionToDataBase.getNewConnection();
+        Connection connection = null;
+        try {
+            connection = DHCPApacheCommonsPoolConnections.getPoolConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
@@ -160,7 +170,7 @@ public class PatientsImplementsDAO implements PatientsDAO {
         List<Patients> patients = new ArrayList<>();
         Connection connection = null;
         try {
-            connection = ConnectionPool.getConnection();
+            connection = DHCPApacheCommonsPoolConnections.getPoolConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
