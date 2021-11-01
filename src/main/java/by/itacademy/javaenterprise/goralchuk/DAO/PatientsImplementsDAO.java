@@ -1,9 +1,10 @@
 package by.itacademy.javaenterprise.goralchuk.DAO;
 
+import by.itacademy.javaenterprise.goralchuk.connect.ConnectionPool;
 import by.itacademy.javaenterprise.goralchuk.service.Patients;
-import by.itacademy.javaenterprise.goralchuk.utils.DHCPApacheCommonsPoolConnections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.Serializable;
 import java.sql.*;
@@ -33,6 +34,7 @@ public class PatientsImplementsDAO implements PatientsDAO {
     private static final Logger logger = LoggerFactory.getLogger(PatientsImplementsDAO.class);
 
 
+
     @Override
     public Patients get(Serializable id) throws SQLException {
         return null;
@@ -42,7 +44,7 @@ public class PatientsImplementsDAO implements PatientsDAO {
     public Patients create(Patients patients) {
         Connection connection = null;
         try {
-            connection = DHCPApacheCommonsPoolConnections.getPoolConnection();
+            connection = ConnectionPool.getPoolConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -107,7 +109,7 @@ public class PatientsImplementsDAO implements PatientsDAO {
         List<Patients> patients = new ArrayList<>();
         Connection connection = null;
         try {
-            connection = DHCPApacheCommonsPoolConnections.getPoolConnection();
+            connection = ConnectionPool.getPoolConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -170,7 +172,7 @@ public class PatientsImplementsDAO implements PatientsDAO {
         List<Patients> patients = new ArrayList<>();
         Connection connection = null;
         try {
-            connection = DHCPApacheCommonsPoolConnections.getPoolConnection();
+            connection = ConnectionPool.getPoolConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
