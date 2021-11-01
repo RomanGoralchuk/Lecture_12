@@ -4,8 +4,6 @@ import by.itacademy.javaenterprise.goralchuk.connect.ConnectionPool;
 import by.itacademy.javaenterprise.goralchuk.service.Patients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 import java.io.Serializable;
 import java.sql.*;
 import java.util.ArrayList;
@@ -30,9 +28,7 @@ public class PatientsImplementsDAO implements PatientsDAO {
     public static final String SELECT_ALL_PATIENTS = "SELECT * FROM patients";
 
 
-
     private static final Logger logger = LoggerFactory.getLogger(PatientsImplementsDAO.class);
-
 
 
     @Override
@@ -45,6 +41,7 @@ public class PatientsImplementsDAO implements PatientsDAO {
         Connection connection = null;
         try {
             connection = ConnectionPool.getPoolConnection();
+            connection.setAutoCommit(false);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -59,7 +56,6 @@ public class PatientsImplementsDAO implements PatientsDAO {
 
             try {
                 if (connection != null) {
-                    connection.setAutoCommit(false);
                     statement = connection.prepareStatement(ADD_PATIENT);
                     statement.setString(1, name);
                     statement.setString(2, surname);
@@ -110,6 +106,7 @@ public class PatientsImplementsDAO implements PatientsDAO {
         Connection connection = null;
         try {
             connection = ConnectionPool.getPoolConnection();
+            connection.setAutoCommit(false);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -119,7 +116,6 @@ public class PatientsImplementsDAO implements PatientsDAO {
             if (connection != null) {
                 statement = connection.prepareStatement(sql);
                 resultSet = statement.executeQuery();
-                connection.setAutoCommit(false);
 
                 while (resultSet.next()) {
                     int id = resultSet.getInt("patient_ID");
@@ -173,6 +169,7 @@ public class PatientsImplementsDAO implements PatientsDAO {
         Connection connection = null;
         try {
             connection = ConnectionPool.getPoolConnection();
+            connection.setAutoCommit(false);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -221,6 +218,5 @@ public class PatientsImplementsDAO implements PatientsDAO {
         }
         return patients;
     }
-
 
 }

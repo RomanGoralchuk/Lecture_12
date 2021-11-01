@@ -24,6 +24,8 @@
         <property name="basicDataSource" ref="dataBaseConfig" />
     </bean>
 
-
+    <bean id="patientsDAO"
+          class="by.itacademy.javaenterprise.goralchuk.DAO.PatientsImplementsDAO">
+    </bean>
 
 </beans>
