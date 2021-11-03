@@ -1,10 +1,3 @@
--- --------------------------------------------------------
--- Хост:                         127.0.0.1
--- Версия сервера:               10.6.4-MariaDB-1:10.6.4+maria~focal - mariadb.org binary distribution
--- Операционная система:         debian-linux-gnu
--- HeidiSQL Версия:              11.3.0.6295
--- --------------------------------------------------------
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET NAMES utf8 */;
 /*!50503 SET NAMES utf8mb4 */;
@@ -12,12 +5,9 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-
--- Дамп структуры базы данных hospital
 CREATE DATABASE IF NOT EXISTS `hospital` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `hospital`;
 
--- Дамп структуры для таблица hospital.disease_treatment
 CREATE TABLE IF NOT EXISTS `disease_treatment` (
   `input_number` int(11) NOT NULL,
   `start_treatment` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
@@ -31,13 +21,11 @@ CREATE TABLE IF NOT EXISTS `disease_treatment` (
   CONSTRAINT `FK_disease_treatment_registration_complaints` FOREIGN KEY (`input_number`) REFERENCES `registration_complaints` (`reg_number`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Дамп данных таблицы hospital.disease_treatment: ~1 rows (приблизительно)
 /*!40000 ALTER TABLE `disease_treatment` DISABLE KEYS */;
 INSERT INTO `disease_treatment` (`input_number`, `start_treatment`, `end_treatment`, `diagnosis`, `result_treatment`, `doctor`) VALUES
 	(1, '2021-10-18 00:25:37', '2021-10-20', 'alcohol', 'alive', 6);
 /*!40000 ALTER TABLE `disease_treatment` ENABLE KEYS */;
 
--- Дамп структуры для таблица hospital.doctors
 CREATE TABLE IF NOT EXISTS `doctors` (
   `doc_ID` int(11) NOT NULL AUTO_INCREMENT,
   `doc_name` char(50) NOT NULL,
@@ -46,7 +34,6 @@ CREATE TABLE IF NOT EXISTS `doctors` (
   PRIMARY KEY (`doc_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
--- Дамп данных таблицы hospital.doctors: ~6 rows (приблизительно)
 /*!40000 ALTER TABLE `doctors` DISABLE KEYS */;
 INSERT INTO `doctors` (`doc_ID`, `doc_name`, `doc_surname`, `doc_specialization`) VALUES
 	(1, 'Jimm', 'Morris', 'cardiologis'),
@@ -57,7 +44,6 @@ INSERT INTO `doctors` (`doc_ID`, `doc_name`, `doc_surname`, `doc_specialization`
 	(6, 'Abraham', 'Lincoln', 'urologist');
 /*!40000 ALTER TABLE `doctors` ENABLE KEYS */;
 
--- Дамп структуры для таблица hospital.patients
 CREATE TABLE IF NOT EXISTS `patients` (
   `patient_ID` int(11) NOT NULL AUTO_INCREMENT,
   `patient_registration` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
@@ -68,7 +54,6 @@ CREATE TABLE IF NOT EXISTS `patients` (
   PRIMARY KEY (`patient_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4;
 
--- Дамп данных таблицы hospital.patients: ~9 rows (приблизительно)
 /*!40000 ALTER TABLE `patients` DISABLE KEYS */;
 INSERT INTO `patients` (`patient_ID`, `patient_registration`, `patient_name`, `patient_surname`, `patient_sex`, `patient_birthday`) VALUES
 	(1, '2021-10-17 23:05:32', 'James', 'Bukster', 'M', '1988-11-10'),
@@ -82,7 +67,6 @@ INSERT INTO `patients` (`patient_ID`, `patient_registration`, `patient_name`, `p
 	(24, '2021-10-28 13:07:31', 'Mark', 'Antony', 'M', '0001-04-04');
 /*!40000 ALTER TABLE `patients` ENABLE KEYS */;
 
--- Дамп структуры для таблица hospital.registration_complaints
 CREATE TABLE IF NOT EXISTS `registration_complaints` (
   `reg_number` int(11) NOT NULL AUTO_INCREMENT,
   `pat_ID` int(11) NOT NULL,
@@ -93,7 +77,6 @@ CREATE TABLE IF NOT EXISTS `registration_complaints` (
   CONSTRAINT `FK_registration_complaints_patients` FOREIGN KEY (`pat_ID`) REFERENCES `patients` (`patient_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
--- Дамп данных таблицы hospital.registration_complaints: ~3 rows (приблизительно)
 /*!40000 ALTER TABLE `registration_complaints` DISABLE KEYS */;
 INSERT INTO `registration_complaints` (`reg_number`, `pat_ID`, `date_input`, `complaints`) VALUES
 	(1, 1, '2021-10-17 23:02:27', 'headache'),
